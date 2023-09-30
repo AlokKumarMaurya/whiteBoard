@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whiteboard/whiteboard.dart';
 
 void main() => runApp(const MyApp());
 
@@ -29,7 +30,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  // Create a controller
+  WhiteBoardController whiteBoardController = WhiteBoardController();
+  int _counter = 1;
 
   void _incrementCounter() {
     setState(() {
@@ -57,30 +60,31 @@ class _MyHomePageState extends State<MyHomePage> {
         title: const Text('Flutter Demo Click Counter'),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+          // Center is a layout widget. It takes a single child and positions it
+          // in the middle of the parent.
+          child: ListView(
+        children: [
+          Container(
+            height: _counter * 1000,
+            child: WhiteBoard(
+              // background Color of white board
+              backgroundColor: Colors.white,
+              // Controller for action on whiteboard
+              controller: whiteBoardController,
+              // Stroke width of freehand
+              strokeWidth: 5,
+              // Stroke color of freehand
+              strokeColor: Colors.green,
+              // For Eraser mode
+              isErasing: false,
+              // Save image
+              onConvertImage: (list) {},
+              // Callback common for redo or undo
+              onRedoUndo: (t, m) {},
             ),
-            Text(
-              '$_counter',
-              style: const TextStyle(fontSize: 25),
-            ),
-          ],
-        ),
-      ),
+          ),
+        ],
+      )),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
